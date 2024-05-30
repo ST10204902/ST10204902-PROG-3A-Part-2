@@ -1,0 +1,81 @@
+﻿@page
+@model LoginModel
+
+@{
+    ViewData["Title"] = "Log in";
+    ViewData["Redirected"] = Model.Input.Redirected;
+}
+
+<style>
+    body {
+        background: rgb(157,235,149);
+        background: radial-gradient(circle, rgba(157,235,149,1) 21%, rgba(67,169,93,1) 80%);
+        color: #333
+    }
+
+    
+</style>
+
+<h1>@ViewData["Title"]</h1>
+<div class="row">
+    <div class="d-flex justify-content-center align-items-center vh-100">
+        <section>
+            <form id="account" method="post">
+                <h2>Use your Agri-Energy Connect Account to log in</h2>
+                <hr />
+                <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                    <label asp-for="Input.Email" class="form-label">Email</label>
+                    <span asp-validation-for="Input.Email" class="text-danger"></span>
+                </div>
+                <div class="form-floating mb-3">
+                    <input asp-for="Input.Password" class="form-control" autocomplete="current-password" aria-required="true" placeholder="password" />
+                    <label asp-for="Input.Password" class="form-label">Password</label>
+                    <span asp-validation-for="Input.Password" class="text-danger"></span>
+                </div>
+                <div class="checkbox mb-3">
+                    <label asp-for="Input.RememberMe" class="form-label">
+                        <input class="form-check-input" asp-for="Input.RememberMe" />
+                        @Html.DisplayNameFor(m => m.Input.RememberMe)
+                    </label>
+                </div>
+                <div>
+                    <button id="login-submit" type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+                <div>
+                    <p>
+                        <a asp-page="./ApplyFarmer" asp-route-returnUrl="@Model.ReturnUrl" class="apply-farmer-button">Apply as a Farmer</a>
+                    </p>
+                </div>
+            </form>
+        </section>
+    </div>
+    
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    @if (Model.Input.Redirected)
+    {
+        <script>
+            Swal.fire({
+                icon: 'info',
+                title: 'Please log in',
+                text: 'You must be logged in to access this page.'
+            });
+        </script>
+    }
+
+    @if (Model.Input.InvalidLoginAttempt)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid login attempt',
+                text: 'Please check your email and password and try again.'
+            });
+        </script>
+    }
+}

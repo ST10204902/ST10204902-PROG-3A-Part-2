@@ -1,0 +1,76 @@
+html {
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.navbar-brand img {
+    margin-right: 10px;
+}
+
+h2 {
+    color: black
+}
+
+h1 {
+    color: black
+}
+
+a {
+    color: black
+}
+
+/* Custom Farmer Button */
+.apply-farmer-button {
+    background-color: #fff;
+    color: #fff;
+    border-radius: 5px;
+    padding: 4px 8px;
+    text-decoration: none;
+    display: inline-block;
+    margin: 8px 4px 4px 0px;
+    transition: background-color 0.3s ease;
+}
+
+    .apply-farmer-button:hover {
+        background-color: #B3B3B3;
+        color: #fff;
+    }
+
+/* Custom new product button */
+.new-product-button {
+    display: inline-flex;
+    height: 46px;
+    padding: 0px 32px 0px 10px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 8px;
+    border: 1px solid #0057FC;
+    background: #FFF;
+}
+
+    .new-product-button.with-icon i {
+        margin-right: 5px;
+    }
+    .new-product-button.with-icon svg {
+        margin-right: 5px;
+    }
+    .new-product-button.without-icon {
+        justify-content: center;
+    }
