@@ -9,9 +9,11 @@ Farmers can apply to join Agri-Energy Connect via the login page. An employee ca
 Default Employee Information:
 - Email/username: employee@example.com
 - Password: Password123!
+
 Default Farmer1 Information:
 - Email/username: farmer1@example.com
 - Password: Password123!
+
 Default Farmer2 Information
 - Email/username: employee@example.com
 - Password: Password123!
