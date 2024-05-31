@@ -45,6 +45,15 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             var application = await _context.Farmers.FindAsync(id);
             if (application != null)
             {
+                // Check if the email is already in use
+                var existingUser = await _userManager.FindByEmailAsync(application.Email);
+                if (existingUser != null)
+                {
+                    // Handle email already in use error
+                    ModelState.AddModelError(string.Empty, "Email is already in use.");
+                    return View(application);
+                }
+
                 var user = new AppUser
                 {
                     UserName = application.UserName,
@@ -55,6 +64,7 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
                     PasswordHash = application.PasswordHash,
                     NormalizedEmail = application.NormalizedEmail,
                 };
+
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

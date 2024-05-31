@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
+using PROG_3A_Part_2_Attempt_3.Helpers;
 using PROG_3A_Part_2_Attempt_3.Models;
 using PROG_3A_Part_2_Attempt_3.Views.Products;
 using System;
@@ -179,5 +180,7 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
         {
             return _context.Products.Any(e => e.ProductID == id);
         }
+
+        
     }
 }

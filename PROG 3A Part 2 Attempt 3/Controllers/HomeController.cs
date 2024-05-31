@@ -82,5 +82,44 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        /// <summary>
+        /// This method filters the products based on the provided criteria.
+        /// </summary>
+        /// <param name="startDate"></param>
+        /// <param name="endDate"></param>
+        /// <param name="category"></param>
+        /// <returns></returns>
+        public async Task<IActionResult> Filter(DateTime? startDate, DateTime? endDate, string category)
+        {
+            var allProducts = await _context.Products.Include(p => p.User).ToListAsync();
+
+            if (startDate.HasValue)
+            {
+                allProducts = allProducts.Where(p => p.ProductionDate >= startDate.Value).ToList();
+            }
+
+            if (endDate.HasValue)
+            {
+                allProducts = allProducts.Where(p => p.ProductionDate <= endDate.Value).ToList();
+            }
+
+            if (!string.IsNullOrEmpty(category) && Enum.TryParse(category, out Category categoryEnum))
+            {
+                allProducts = allProducts.Where(p => p.Category == categoryEnum).ToList();
+            }
+
+            var userId = _userManager.GetUserId(User);
+            var userProducts = allProducts.Where(p => p.UserId == userId).ToList();
+            var otherProducts = allProducts.Where(p => p.UserId != userId).ToList();
+
+            var model = new ProductListsViewModel
+            {
+                UserProducts = userProducts,
+                OtherProducts = otherProducts
+            };
+
+            return View("Index", model);
+        }
     }
 }

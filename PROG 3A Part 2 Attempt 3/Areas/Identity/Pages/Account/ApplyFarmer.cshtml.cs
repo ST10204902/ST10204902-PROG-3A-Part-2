@@ -28,14 +28,16 @@ namespace PROG_3A_Part_2_Attempt_3.Areas.Identity.Pages.Account
     {
         private readonly ILogger<RegisterModel> _logger;
         private readonly AppDbContext _context;
+        private readonly UserManager<FarmerApplication> _userManager;
 
         /// <summary>
         /// Constructor for RegisterModel.
         /// </summary>
-        public RegisterModel(ILogger<RegisterModel> logger, AppDbContext context)
+        public RegisterModel(ILogger<RegisterModel> logger, AppDbContext context, UserManager<FarmerApplication> userManager)
         {
             _logger = logger;
             _context = context;
+            _userManager = userManager;
         }
 
         /// <summary>
@@ -82,9 +84,9 @@ namespace PROG_3A_Part_2_Attempt_3.Areas.Identity.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                var existingUser = await _context.Farmers.FirstOrDefaultAsync(f => f.Email == Input.Email);
-
-                if (existingUser != null)
+                var existingFarmer = await _context.Farmers.FirstOrDefaultAsync(f => f.Email == Input.Email);
+                var existingUser = await _userManager.FindByEmailAsync(Input.Email);
+                if (existingFarmer != null)
                 {
                     TempData["ErrorMessage"] = "A user with the same email already exists.";
                     return Page();
