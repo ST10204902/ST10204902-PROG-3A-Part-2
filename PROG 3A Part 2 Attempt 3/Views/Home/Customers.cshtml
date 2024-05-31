@@ -12,12 +12,7 @@
         </svg>
         New Farmer
     </a>
-    <a class="new-product-button with-icon" asp-action="Create" asp-controller="Users">
-        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="20" viewBox="0 0 20 20" fill="none">
-            <!-- No path in this SVG, so it doesn't display anything -->
-        </svg>
-        View Farmer Applications
-    </a>
+    
 </div>
 
 <h3>Customer Table</h3>
@@ -31,7 +26,7 @@
             <th>First Name</th>
             <th>Middle Names</th>
             <th>Role</th>
-            <th></th>
+            
         </tr>
     </thead>
     <tbody>
@@ -44,7 +39,7 @@
                 <td>@user.FirstName</td>
                 <td>@user.MiddleNames</td>
                 <td>@Model.UserRoles[user.Id]</td>
-                <td><a href="@Url.Action("Index", "Products", new { userId = user.Id })" class="btn btn-primary">View Products</a></td>
+                
             </tr>
         }
     </tbody>

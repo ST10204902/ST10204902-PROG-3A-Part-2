@@ -1,0 +1,55 @@
+﻿@model List<FarmerApplication>
+
+<h1>Add Farmers</h1>
+
+<table class="table myTable">
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Middle Names</th>
+            <th>Email</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var application in Model)
+        {
+            <tr>
+                <td>@application.FirstName</td>
+                <td>@application.LastName</td>
+                <td>@application.MiddleNames</td>
+                <td>@application.Email</td>
+                <td>
+                    <form asp-action="AddFarmer" asp-controller="Users" method="post">
+                        <input type="hidden" name="id" value="@application.Id" />
+                        <button type="submit" class="add-farmer-button">Add Farmer</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    document.querySelectorAll('.add-farmer-button').forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, add it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.form.submit();
+                }
+            })
+        });
+    });
+
+</script>

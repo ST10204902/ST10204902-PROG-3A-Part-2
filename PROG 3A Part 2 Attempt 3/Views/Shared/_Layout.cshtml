@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@using PROG_3A_Part_2_Attempt_3.Models
+@using Microsoft.AspNetCore.Http
+@inject UserManager<AppUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -52,7 +56,17 @@
                                 }
                             </ul>
 
-                            <ul class="navbar-nav ml-auto">
+
+                            <ul class="navbar-nav ml-auto align-items-center">
+                                @{
+                                    var user = await UserManager.GetUserAsync(User);
+                                    if (user != null)
+                                    {
+                                        <li class="nav-item my-auto">
+                                            <span class="navbar-text">Hello, @user.FirstName @user.LastName</span>
+                                        </li>
+                                    }
+                                }
                                 <li class="nav-item">
                                     <form asp-controller="Account" asp-action="Logout" method="post">
                                         <button type="submit" class="btn btn-link text-black">Logout</button>

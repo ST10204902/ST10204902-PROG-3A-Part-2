@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Builder.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.EntityFrameworkCore;
 using PROG_3A_Part_2_Attempt_3.Models;
 using PROG_3A_Part_2_Attempt_3.Views.Products;
@@ -22,6 +24,11 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             return View();
         }
 
+        /// <summary>
+        /// This method creates a new product
+        /// </summary>
+        /// <param name="productViewModel"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(ProductViewModel productViewModel)
@@ -61,11 +68,6 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
 
             if (errors.Count() == 3)
             {
-                //productViewModel.Product.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                //productViewModel.Product.User = await _context.Users.FindAsync(productViewModel.Product.UserId);
-
-                
-
                 try
                 {
                     _context.Products.Add(productViewModel.Product);
@@ -101,7 +103,8 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             {
                 return NotFound();
             }
-            return View(product);
+            var viewModel = new ProductViewModel { Product = product };
+            return View(viewModel);
         }
 
         /// <summary>
@@ -112,37 +115,59 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,Name,Category,ProductionDate,UserId,Photo,Cost")] Product product)
+        public async Task<IActionResult> Edit(string id, ProductViewModel pvm)
         {
-            if (id != product.ProductID)
+            ModelState.Remove("Product.UserId");
+            ModelState.Remove("Product.User");
+            ModelState.Remove("Product.Photo");
+
+            if (ModelState.ErrorCount > 3)
             {
-                return NotFound();
+                return View(pvm);
             }
 
-            if (ModelState.IsValid)
+            try
             {
-                try
-                {
-                    // Set the UserId to the current user's Id
-                    product.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                pvm.Product.UserId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                pvm.Product.User = await _context.Users.FindAsync(pvm.Product.UserId);
 
-                    _context.Update(product);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
+                if (pvm.Photo != null)
                 {
-                    if (!ProductExists(product.ProductID))
+                    using (var memoryStream = new MemoryStream())
                     {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
+                        await pvm.Photo.CopyToAsync(memoryStream);
+                        if (memoryStream.Length > 0)
+                        {
+                            pvm.Product.Photo = memoryStream.ToArray();
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("Photo", "The file is too large.");
+                        }
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            catch (Exception ex)
+            {
+                //log exception or return error view
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
+
+            var errors = ModelState
+                            .Where(x => x.Value.Errors.Count > 0)
+                            .Select(x => new { x.Key, x.Value.Errors })
+                            .ToArray();
+
+            try
+            {
+                _context.Update(pvm.Product);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index), "Home");
+            }
+            catch (Exception ex)
+            {
+                return View("Error", new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }
         }
 
         /// <summary>

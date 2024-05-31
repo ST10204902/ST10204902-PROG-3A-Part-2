@@ -1,0 +1,30 @@
+﻿@page
+@model ProductListsViewModel
+@{
+}
+
+<h1>User's Products</h1>
+
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Category</th>
+                <th>Production Date</th>
+                <th>Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in Model.UserProducts)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.Category</td>
+                    <td>@product.ProductionDate</td>
+                    <td>@product.Cost</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
