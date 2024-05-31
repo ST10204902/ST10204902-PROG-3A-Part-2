@@ -1,4 +1,4 @@
-# PROG 3A Part 2 Attempt 3# PROG 3A Part 2 Attempt 3
+# PROG 3A Part 2 Attempt 3
 
 This project is a web application developed in ASP.NET Core. It includes various features such as user authentication, product management, and more.
 
@@ -51,9 +51,53 @@ The `FarmerApplication` model represents a farmer application. It inherits from 
 The `Product` model represents a product in the application. It includes properties such as `ProductID`, `Name`, `Category`, `ProductionDate`, `UserId`, `User`, `Photo`, and `Cost`.
 
 The `Category` is an enum that represents the category of a product. It includes values such as `RenewableEnergy`, `WaterConservation`, `SoilHealthProducts`, `PestControl`, and `Other`.
+
 ## Setup
 
-To run this project, you will need to have .NET Core installed on your machine. Once you have that, you can clone this repository and run the project using the `dotnet run` command in the terminal.
+### Hardware Requirements
+- **Processor:** 1.8 GHz or faster (dual-core or better recommended)
+- **RAM:** 4 GB (8 GB or more recommended)
+- **Hard Disk:** At least 5 GB of free space
+- **Screen Resolution:** 1280x720 or higher
+
+### Software Requirements
+- **Operating System:** Windows 10 or later, macOS, or a Linux distribution
+- **.NET SDK:** .NET 8.0 SDK (https://dotnet.microsoft.com/download/dotnet/8.0)
+- **Visual Studio:** Visual Studio 2022 (Community, Professional, or Enterprise)
+
+### Steps to Setup
+
+1. **Download and Install .NET 8.0 SDK**
+   - Visit the [.NET download page](https://dotnet.microsoft.com/download/dotnet/8.0) and download the installer for your operating system.
+   - Follow the instructions on the website to complete the installation.
+
+2. **Download and Install Visual Studio 2022**
+   - Visit the [Visual Studio download page](https://visualstudio.microsoft.com/downloads/) and download the installer.
+   - During the installation, ensure you include the "ASP.NET and web development" workload.
+
+3. **Clone the Repository**
+   - Open a terminal and run the following command:
+     ```sh
+     git clone <repository_url>
+     ```
+   - Navigate to the project directory:
+     ```sh
+     cd <project_directory>
+     ```
+
+4. **Download the ZIP File and Extract**
+   - Alternatively, you can download the project as a ZIP file from the repository page.
+   - Extract the contents of the ZIP file to your desired location.
+
+5. **Open the Project in Visual Studio 2022**
+   - Launch Visual Studio 2022.
+   - Click on "Open a project or solution".
+   - Navigate to the folder where you cloned/extracted the project and select the solution file (`.sln`).
+
+6. **Run the Project**
+   - In Visual Studio, ensure the solution is loaded.
+   - Set the startup project if it's not already set by right-clicking on the project in Solution Explorer and selecting "Set as Startup Project".
+   - Press `F5` or click on the "Run" button to build and run the project.
 
 ## Contributing
 
