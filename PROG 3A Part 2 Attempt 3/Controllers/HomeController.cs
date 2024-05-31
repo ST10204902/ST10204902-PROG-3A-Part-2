@@ -7,6 +7,9 @@ using System.Diagnostics;
 
 namespace PROG_3A_Part_2_Attempt_3.Controllers
 {
+    /// <summary>
+    /// Controller for handling home related actions.
+    /// </summary>
     [Authorize]
     public class HomeController : Controller
     {
@@ -14,6 +17,12 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
         private readonly AppDbContext _context;
         private readonly UserManager<AppUser> _userManager;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="HomeController"/> class.
+        /// </summary>
+        /// <param name="logger">The logger.</param>
+        /// <param name="context">The application database context.</param>
+        /// <param name="userManager">The user manager.</param>
         public HomeController(ILogger<HomeController> logger, AppDbContext context, UserManager<AppUser> userManager)
         {
             _logger = logger;
@@ -21,9 +30,13 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             _userManager = userManager;
         }
 
-        public IActionResult Index()
+        /// <summary>
+        /// Returns the home page view.
+        /// </summary>
+        /// <returns>The home page view.</returns>
+        public async Task<IActionResult> Index()
         {
-            var allProducts = _context.Products.Include(p => p.User).ToList();
+            var allProducts = await _context.Products.Include(p => p.User).ToListAsync();
             var userProducts = allProducts.Where(p => p.User?.Email == User.Identity.Name).ToList();
             var otherProducts = allProducts.Except(userProducts).ToList();
 
@@ -36,7 +49,10 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             return View(model);
         }
 
-
+        /// <summary>
+        /// Returns the customers view.
+        /// </summary>
+        /// <returns>The customers view.</returns>
         public async Task<IActionResult> Customers()
         {
             var users = await _userManager.Users.ToListAsync();
@@ -45,7 +61,7 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             foreach (var user in users)
             {
                 var role = await _userManager.GetRolesAsync(user);
-                userRoles[user.Id] = role.FirstOrDefault();
+                userRoles[user.Id] = role.Any() ? role.First() : null;
             }
 
             var viewModel = new CustomersViewModel
@@ -57,7 +73,10 @@ namespace PROG_3A_Part_2_Attempt_3.Controllers
             return View(viewModel);
         }
 
-        
+        /// <summary>
+        /// Returns the error view.
+        /// </summary>
+        /// <returns>The error view.</returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

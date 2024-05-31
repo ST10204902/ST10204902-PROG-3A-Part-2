@@ -1,4 +1,12 @@
-﻿@model ProductViewModel
+﻿@* 
+    This view is used to edit an existing product.
+    It contains a form that the user can fill out to modify the details of the product.
+    The form includes fields for the product's name, category, production date, photo, and cost.
+    The form data is posted to the server when the user clicks the "Save" button.
+    If the form data is valid, the server updates the product and redirects the user to the product list.
+    If the form data is not valid, the server re-displays the form with validation messages.
+*@
+@model ProductViewModel
 @using static PROG_3A_Part_2_Attempt_3.Helpers.EnumExtensions;
 @{
     ViewData["Title"] = "Edit";

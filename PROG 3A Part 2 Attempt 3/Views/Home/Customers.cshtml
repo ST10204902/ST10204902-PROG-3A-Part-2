@@ -1,8 +1,9 @@
 ﻿@model CustomersViewModel
 @{
+    // Set the title of the page
     ViewData["Title"] = "Customer List";
-    
 }
+<!-- Display the title of the page -->
 <h1>@ViewData["Title"]</h1>
 
 <div class="text-center">
@@ -12,36 +13,37 @@
         </svg>
         New Farmer
     </a>
-    
 </div>
 
+<!-- Display the customer table title -->
 <h3>Customer Table</h3>
 
+<!-- Create a table to display the customers -->
 <table class="table myTable">
     <thead>
         <tr>
+            <!-- Define the headers of the table -->
             <th>Id</th>
             <th>Username</th>
             <th>Last Name</th>
             <th>First Name</th>
             <th>Middle Names</th>
             <th>Role</th>
-            
         </tr>
     </thead>
     <tbody>
+        <!-- Loop through each user in the model -->
         @foreach (var user in Model.Users)
         {
             <tr>
-                <td>@user.Id</td>
-                <td>@user.UserName</td>
-                <td>@user.LastName</td>
-                <td>@user.FirstName</td>
-                <td>@user.MiddleNames</td>
-                <td>@Model.UserRoles[user.Id]</td>
-                
+                <!-- Display the properties of the user -->
+                <td>@Html.DisplayFor(modelItem => user.Id)</td>
+                <td>@Html.DisplayFor(modelItem => user.UserName)</td>
+                <td>@Html.DisplayFor(modelItem => user.LastName)</td>
+                <td>@Html.DisplayFor(modelItem => user.FirstName)</td>
+                <td>@Html.DisplayFor(modelItem => user.MiddleNames)</td>
+                <td>@Html.DisplayFor(modelItem => Model.UserRoles[user.Id])</td>
             </tr>
         }
     </tbody>
 </table>
-

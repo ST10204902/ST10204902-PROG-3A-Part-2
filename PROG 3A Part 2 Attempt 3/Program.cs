@@ -2,57 +2,67 @@ using Microsoft.EntityFrameworkCore;
 using PROG_3A_Part_2_Attempt_3.Models;
 using Microsoft.AspNetCore.Identity;
 
-var builder = WebApplication.CreateBuilder(args);
+var builder = Host.CreateDefaultBuilder(args)
+    .ConfigureWebHostDefaults(webBuilder =>
+    {
+        webBuilder.ConfigureServices((context, services) =>
+        {
+            // Add services to the container.
+            services.AddControllersWithViews();
+            services.AddRazorPages();
 
-// Add services to the container.
-builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+            //Set the data directory path
+            AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(Directory.GetCurrentDirectory(), "App_Data"));
 
-//Set the data directory path
-AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(Directory.GetCurrentDirectory(), "App_Data"));
+            //Configure the DbContext with SQL Server
+            services.AddDbContext<AppDbContext>(options => options.UseSqlServer(context.Configuration.GetConnectionString("DefaultConnection")));
 
-//Configure the DbContext with SQL Server
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+            //Configure Identity
+            services.AddDefaultIdentity<AppUser>()
+                .AddRoles<AppRole>()
+                .AddEntityFrameworkStores<AppDbContext>();
 
-//Configure Identity
-builder.Services.AddDefaultIdentity<AppUser>()
-    .AddRoles<AppRole>()
-    .AddEntityFrameworkStores<AppDbContext>();
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.LoginPath = new PathString("/Identity/Account/Login");
+            });
+        })
+        .Configure((context, app) =>
+        {
+            //Seed the database
+            using (var scope = app.ApplicationServices.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+                DbInitializer.Initialize(services).Wait();
+            }
 
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.LoginPath = new PathString("/Identity/Account/Login");
-});
+            // Configure the HTTP request pipeline.
+            app.UseWhen(x => !x.Request.Path.StartsWithSegments("/health"), appBuilder =>
+            {
+                if (!context.HostingEnvironment.IsDevelopment())
+                {
+                    appBuilder.UseExceptionHandler("/Home/Error");
+                    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
+                    appBuilder.UseHsts();
+                }
 
-var app = builder.Build();
+                appBuilder.UseHttpsRedirection();
+                appBuilder.UseStaticFiles();
 
-//Seed the database
-using (var scope = app.Services.CreateScope())
-{
-    var services = scope.ServiceProvider;
-    await DbInitializer.Initialize(services);
-}
+                appBuilder.UseRouting();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
-{
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
-}
+                appBuilder.UseAuthentication();
+                appBuilder.UseAuthorization();
 
-app.UseHttpsRedirection();
-app.UseStaticFiles();
+                appBuilder.UseEndpoints(endpoints =>
+                {
+                    endpoints.MapRazorPages();
+                    endpoints.MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Home}/{action=Index}/{id?}");
+                });
+            });
+        });
+    });
 
-app.UseRouting();
-
-app.UseAuthentication();
-app.UseAuthorization();
-
-app.MapRazorPages();
-
-app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
-
-app.Run();
+await builder.RunConsoleAsync();

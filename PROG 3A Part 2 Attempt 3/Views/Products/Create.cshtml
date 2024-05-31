@@ -1,4 +1,12 @@
-﻿@model ProductViewModel;
+﻿@* 
+    This view is used to create a new product.
+    It contains a form that the user can fill out to specify the details of the product.
+    The form includes fields for the product's name, category, production date, photo, and cost.
+    The form data is posted to the server when the user clicks the "Create" button.
+    If the form data is valid, the server creates a new product and redirects the user to the product list.
+    If the form data is not valid, the server re-displays the form with validation messages.
+*@
+@model ProductViewModel;
 @using static PROG_3A_Part_2_Attempt_3.Helpers.EnumExtensions;
 @{
     ViewData["Title"] = "Create";
@@ -14,22 +22,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Product.Name" class="control-label"></label>
-                <input asp-for="Product.Name" class="form-control" />
+                @Html.EditorFor(model => model.Product.Name, new { htmlAttributes = new { @class = "form-control" } })
                 <span asp-validation-for="Product.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.Category" class="control-label"></label>
-                <select asp-for="Product.Category" class="form-control">
-                    @foreach (Category category in Enum.GetValues(typeof(Category)))
-                    {
-                        <option value="@category">@category.ToCategoryDisplayName()  </option>
-                    }
-                </select>
+                @Html.DropDownListFor(model => model.Product.Category, Enum.GetValues(typeof(Category)).Cast<Category>().Select(category => new SelectListItem { Text = category.ToCategoryDisplayName(), Value = category.ToString() }), new { @class = "form-control" })
                 <span asp-validation-for="Product.Category" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Product.ProductionDate" class="control-label"></label>
-                <input asp-for="Product.ProductionDate" class="form-control" />
+                @Html.EditorFor(model => model.Product.ProductionDate, new { htmlAttributes = new { @class = "form-control" } })
                 <span asp-validation-for="Product.ProductionDate" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -39,7 +42,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Product.Cost" class="control-label"></label>
-                <input asp-for="Product.Cost" class="form-control" />
+                @Html.EditorFor(model => model.Product.Cost, new { htmlAttributes = new { @class = "form-control" } })
                 <span asp-validation-for="Product.Cost" class="text-danger"></span>
             </div>
             

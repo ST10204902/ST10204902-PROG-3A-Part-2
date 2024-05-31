@@ -304,7 +304,7 @@ namespace PROG_3A_Part_2_Attempt_3.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Farmers");
+                    b.ToTable("Farmers", (string)null);
                 });
 
             modelBuilder.Entity("PROG_3A_Part_2_Attempt_3.Models.Product", b =>
@@ -340,7 +340,7 @@ namespace PROG_3A_Part_2_Attempt_3.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Products");
+                    b.ToTable("Products", (string)null);
                 });
 
             modelBuilder.Entity("PROG_3A_Part_2_Attempt_3.Models.AppRole", b =>

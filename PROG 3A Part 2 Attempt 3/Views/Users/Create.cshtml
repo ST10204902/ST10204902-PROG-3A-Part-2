@@ -21,8 +21,8 @@
                 <td>@application.MiddleNames</td>
                 <td>@application.Email</td>
                 <td>
-                    <form asp-action="AddFarmer" asp-controller="Users" method="post">
-                        <input type="hidden" name="id" value="@application.Id" />
+                    <form asp-action="AddFarmer" asp-controller="Users" asp-route-id="@application.Id" method="post">
+                        @Html.AntiForgeryToken()
                         <button type="submit" class="add-farmer-button">Add Farmer</button>
                     </form>
                 </td>

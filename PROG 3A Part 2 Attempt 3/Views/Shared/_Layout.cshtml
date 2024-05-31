@@ -1,4 +1,14 @@
-﻿@using Microsoft.AspNetCore.Identity
+﻿@* 
+    This is the main layout file for the application.
+    It defines the common structure for all pages in the application.
+    It includes the HTML head section, header, main content area, and footer.
+    The head section includes meta tags, the page title, and links to CSS files.
+    The header includes the navigation bar.
+    The main content area is where the content of individual pages is rendered.
+    The footer includes copyright information.
+    The layout also includes common scripts and a section for page-specific scripts.
+*@
+@using Microsoft.AspNetCore.Identity
 @using PROG_3A_Part_2_Attempt_3.Models
 @using Microsoft.AspNetCore.Http
 @inject UserManager<AppUser> UserManager
@@ -8,8 +18,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Agri-Energy Connect</title>
-
-    
 
     <link rel="stylesheet" href="~/css/">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
@@ -21,8 +29,6 @@
     <link rel="stylesheet" href="~/bootstrap-dark-mode/bootstrap-dark-mode.dark.rtl.min.css" />
     <link rel="stylesheet" href="~/bootstrap-dark-mode/bootstrap-dark-mode.rtl.min.css" />
     <link rel="stylesheet" href="~/css/sweetalert2.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-    
 </head>
 <body>
     <header>
@@ -75,9 +81,6 @@
                             </ul>
                         }
                     }
-                    
-                    
-                    
                 </div>
             </div>
         </nav>

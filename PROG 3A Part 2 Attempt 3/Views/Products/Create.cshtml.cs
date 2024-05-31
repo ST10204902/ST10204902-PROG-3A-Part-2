@@ -26,15 +26,14 @@ namespace PROG_3A_Part_2_Attempt_3.Views.Products
         [BindProperty]
         public Product Product { get; set; } = default!;
 
-        
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            if (!await TryUpdateModelAsync(Product, "Product"))
             {
                 return Page();
             }
 
-            _context.Products.Add(Product);
+            await _context.Products.AddAsync(Product);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");
