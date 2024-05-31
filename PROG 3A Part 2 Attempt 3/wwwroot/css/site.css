@@ -74,3 +74,50 @@ a {
     .new-product-button.without-icon {
         justify-content: center;
     }
+
+/* Table styles */
+.table.myTable {
+    width: 100%;
+    margin-top: 20px;
+    border-collapse: collapse;
+}
+
+    .table.myTable th, .table.myTable td {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .table.myTable th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #f0f0f0; /* Light grey */
+        color: black;
+    }
+
+    .table.myTable tr {
+        background-color: #fafafa; /* Very light grey */
+    }
+
+        .table.myTable tr:hover {
+            background-color: #f0f0f0; /* Light grey */
+        }
+
+    .table.myTable .btn {
+        color: #fff;
+        background-color: #4CAF50; /* Light grey */
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 4px 2px;
+        transition-duration: 0.4s;
+        cursor: pointer;
+    }
+
+        .table.myTable .btn:hover {
+            background-color: #d0d0d0; /* Darker grey */
+        }

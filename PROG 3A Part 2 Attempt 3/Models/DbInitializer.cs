@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace PROG_3A_Part_2_Attempt_3.Models
 {
@@ -19,6 +20,8 @@ namespace PROG_3A_Part_2_Attempt_3.Models
             //Create the database if it doesn't exist
             context.Database.EnsureCreated();
 
+            await context.Database.MigrateAsync();
+
             string[] roles = { "Farmer", "Employee" };
 
             //Populate the roles
@@ -28,7 +31,6 @@ namespace PROG_3A_Part_2_Attempt_3.Models
                 {
                     await roleManager.CreateAsync(new AppRole { Name = role });
                 }
-
             }
 
             //Check if the employee user already exists
@@ -47,6 +49,8 @@ namespace PROG_3A_Part_2_Attempt_3.Models
 
                 await userManager.AddToRoleAsync(user, "Employee"); // Assign the user to the Employee role
             }
+
+            var imageBytes = await File.ReadAllBytesAsync("wwwroot/images/Agri-Energy Connect NoBG.png");
 
             //Check if the farmer user already exists
             if (await userManager.FindByEmailAsync("farmer1@example.com") == null)
@@ -69,9 +73,9 @@ namespace PROG_3A_Part_2_Attempt_3.Models
 
                     // Add some products
                     context.Products.AddRange(
-                        new Product { Name = "Solar Panel 500W", Category = "Renewable Energy", ProductionDate = DateTime.Now, UserId = user.Id },
-                        new Product { Name = "Rainwater Collector 9000", Category = "Water Conservation", ProductionDate = DateTime.Now, UserId = user.Id },
-                        new Product { Name = "Organic Fertilizer", Category = "Soil Health Products", ProductionDate = DateTime.Now, UserId = user.Id }
+                        new Product { Name = "Solar Panel 500W", Category = Category.RenewableEnergy, ProductionDate = DateTime.Now, UserId = user.Id, Photo = imageBytes, Cost = 4000.0},
+                        new Product { Name = "Rainwater Collector 9000", Category = Category.WaterConservation, ProductionDate = DateTime.Now, UserId = user.Id, Photo = imageBytes, Cost = 80000.0 },
+                        new Product { Name = "Organic Fertilizer", Category = Category.SoilHealthProducts, ProductionDate = DateTime.Now, UserId = user.Id, Photo = imageBytes, Cost = 100.0 }
                     );
 
                     await context.SaveChangesAsync();
@@ -87,7 +91,6 @@ namespace PROG_3A_Part_2_Attempt_3.Models
                     Email = "farmer2@example.com",
                     FirstName = "Farmer",
                     LastName = "Two",
-                    
                 };
 
                 var result = await userManager.CreateAsync(user, "Password123!"); // Set a default password for the user
@@ -98,15 +101,14 @@ namespace PROG_3A_Part_2_Attempt_3.Models
 
                     // Add some products
                     context.Products.AddRange(
-                        new Product { Name = "Wind Turbine 1KW", Category = "Renewable Energy", ProductionDate = DateTime.Now, UserId = user.Id },
-                        new Product { Name = "Drip Irrigation System", Category = "Water Conservation", ProductionDate = DateTime.Now, UserId = user.Id },
-                        new Product { Name = "Compost Bin", Category = "Soil Health Products", ProductionDate = DateTime.Now, UserId = user.Id }
+                        new Product { Name = "Wind Turbine 1KW", Category = Category.RenewableEnergy, ProductionDate = DateTime.Now, UserId = user.Id, Photo = imageBytes , Cost = 4000.0 },
+                        new Product { Name = "Drip Irrigation System", Category = Category.WaterConservation, ProductionDate = DateTime.Now, UserId = user.Id, Photo = imageBytes, Cost = 1200.0 },
+                        new Product { Name = "Compost Bin", Category = Category.SoilHealthProducts, ProductionDate = DateTime.Now, UserId = user.Id, Photo = imageBytes, Cost = 100.0 }
                     );
 
                     await context.SaveChangesAsync();
                 }
             }
         }
-
     }
 }

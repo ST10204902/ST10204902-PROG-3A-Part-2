@@ -1,17 +1,21 @@
-﻿@{
+﻿@model ProductListsViewModel;
+@using static PROG_3A_Part_2_Attempt_3.Helpers.EnumExtensions
+@{
+    
     ViewData["Title"] = "Dashboard";
-    //TODO: Fix 
-    // bool isFarmer = true;
+    int yourCounter = 0;
+    int theirCounter = 0;
+
 }
 
 <div class="text-center">
     <h1>@ViewData["Title"]</h1>
-    <button class="new-product-button with-icon">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
-            <path d="M9.99996 4.79169V15.2084M15.2083 10H4.79163" stroke="#0057FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-        New Product
-    </button>
+    <a class="new-product-button with-icon" asp-action="Create" asp-controller="Products">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
+        <path d="M9.99996 4.79169V15.2084M15.2083 10H4.79163" stroke="#0057FC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    New Product
+</a>
     
 </div>
 
@@ -20,22 +24,51 @@
     {
         <h2>Your Products</h2>
         <div class="row">
-            <div class="col-md-6">
-                <div class="card"></div>
-            </div>
-            <div class="col-md-6">
-                <div class="card"></div>
+    @foreach (var product in Model.UserProducts)
+    {
+        if (yourCounter != 0 && yourCounter % 2 == 0)
+        {
+            @:</div><div class="row">
+        }
+        <div class="col-md-6 mb-3">
+            <div class="card">
+                <img class="card-img-top" src="data:image/jpeg;base64,@Convert.ToBase64String(product.Photo)" alt="Product photo">
+                <div class="card-body">
+                    <h5 class="card-title">@product.Name</h5>
+                    <p class="card-text">
+                        Category: @product.Category.ToCategoryDisplayName()<br>
+                        Production Date: @product.ProductionDate.ToString("d")<br>
+                        Price: R @product.Cost
+                    </p>
+                    @if (User?.Identity?.Name == product.User?.Email)
+                    {
+                        <a href="@Url.Action("Edit", "Products", new { id = product.ProductID })" class="btn btn-primary">Edit</a>
+                    }
+                </div>
             </div>
         </div>
+        yourCounter++;
+    }
+</div>
     }
 
     <h2>All Products</h2>
     <div class="row">
-        <div class="col-md-6">
-            <div class="card"></div>
-        </div>
-        <div class="col-md-6">
-            <div class="card"></div>
-        </div>
+        @foreach (var product in Model.OtherProducts)
+        {
+            <div class="col-md-6 mb-3">
+                <div class="card">
+                    <img class="card-img-top" src="data:image/jpeg;base64,@Convert.ToBase64String(product.Photo)" alt="Product photo">
+                    <div class="card-body">
+                        <h5 class="card-title">@product.Name</h5>
+                        <p class="card-text">
+                            Category: @product.Category.ToCategoryDisplayName()<br>
+                            Production Date: @product.ProductionDate.ToString("d")<br>
+                            Price: R @product.Cost
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
     </div>
 </div>

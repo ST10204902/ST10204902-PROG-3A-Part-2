@@ -12,7 +12,7 @@ using PROG_3A_Part_2_Attempt_3.Models;
 namespace PROG_3A_Part_2_Attempt_3.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240530090103_InitialCreate")]
+    [Migration("20240530135034_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -322,9 +322,16 @@ namespace PROG_3A_Part_2_Attempt_3.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<double>("Cost")
+                        .HasColumnType("float");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<byte[]>("Photo")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("ProductionDate")
                         .HasColumnType("datetime2");
