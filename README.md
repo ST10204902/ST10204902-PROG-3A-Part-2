@@ -2,6 +2,20 @@
 
 This project is a web application developed in ASP.NET Core. It includes various features such as user authentication, product management, and more.
 
+
+### Login Details
+Farmers can apply to join Agri-Energy Connect via the login page. An employee can then review the application and approve it, granting the farmer access to the site.
+
+Default Employee Information:
+- Email/username: employee@example.com
+- Password: Password123!
+Default Farmer1 Information:
+- Email/username: farmer1@example.com
+- Password: Password123!
+Default Farmer2 Information
+- Email/username: employee@example.com
+- Password: Password123!
+
 ## Features
 
 ### User Authentication
