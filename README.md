@@ -78,8 +78,9 @@ The `Category` is an enum that represents the category of a product. It includes
 
 ### Software Requirements
 - **Operating System:** Windows 10 or later, macOS, or a Linux distribution
-- **.NET SDK:** .NET 8.0 SDK (https://dotnet.microsoft.com/download/dotnet/8.0)
+- **.NET SDK:** [.NET 8.0 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
 - **Visual Studio:** Visual Studio 2022 (Community, Professional, or Enterprise)
+- **SQL Server Express** [SQL Server](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 
 ### Steps to Setup
 
