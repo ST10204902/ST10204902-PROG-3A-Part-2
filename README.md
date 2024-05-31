@@ -1,7 +1,7 @@
 # PROG 3A Part 2 Attempt 3
 
 This project is a web application developed in ASP.NET Core. It includes various features such as user authentication, product management, and more.
-
+[GitHub[(https://github.com/ST10204902/ST10204902-PROG-3A-Part-2)
 
 ### Login Details
 Farmers can apply to join Agri-Energy Connect via the login page. An employee can then review the application and approve it, granting the farmer access to the site.
