@@ -1,5 +1,8 @@
 # PROG 3A Part 2 Attempt 3
 
+# IMPORTANT NOTE PLEASE READ
+If the database name is the same as any other submission, the application will fail to access the database. If it is stored on a UNC drive of some kind, the database will not be accessible and an AggregateException will occur.
+
 This project is a web application developed in ASP.NET Core. It includes various features such as user authentication, product management, and more.
 [GitHub](https://github.com/ST10204902/ST10204902-PROG-3A-Part-2)
 
@@ -15,7 +18,7 @@ Default Farmer1 Information:
 - Password: Password123!
 
 Default Farmer2 Information
-- Email/username: employee@example.com
+- Email/username: farmer2@example.com
 - Password: Password123!
 
 ## Features
