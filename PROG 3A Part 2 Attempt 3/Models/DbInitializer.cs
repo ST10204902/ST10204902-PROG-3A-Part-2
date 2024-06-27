@@ -25,7 +25,7 @@ namespace PROG_3A_Part_2_Attempt_3.Models
 
             await context.Database.MigrateAsync();
 
-            string[] roles = { "Farmer", "Employee" };
+            string[] roles = { "Farmer", "Employee"};
 
             // Populate the roles
             foreach (string role in roles)

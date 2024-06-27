@@ -26,5 +26,11 @@ namespace PROG_3A_Part_2_Attempt_3.Models
         /// Gets or sets the middle names of the farmer.
         /// </summary>
         public string? MiddleNames { get; set; }
+
+        public FarmerApplication(): base()
+        {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+        }
     }
 }

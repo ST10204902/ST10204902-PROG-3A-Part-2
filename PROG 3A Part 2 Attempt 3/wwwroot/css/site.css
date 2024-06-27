@@ -15,6 +15,11 @@ html {
 }
 
 body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    padding: 20px;
+    margin: 0;
     margin-bottom: 60px;
 }
 
@@ -22,24 +27,16 @@ body {
     margin-right: 10px;
 }
 
-h2 {
-    color: black
-}
-
-h1 {
-    color: black
-}
-
-a {
-    color: black
+h1, h2, a{
+    color: #212529;
 }
 
 /* Custom Farmer Button */
 .apply-farmer-button {
-    background-color: #fff;
+    background-color: #007bff;
     color: #fff;
     border-radius: 5px;
-    padding: 4px 8px;
+    padding: 8px 16px;
     text-decoration: none;
     display: inline-block;
     margin: 8px 4px 4px 0px;
@@ -47,8 +44,8 @@ a {
 }
 
     .apply-farmer-button:hover {
-        background-color: #B3B3B3;
-        color: #fff;
+        background-color: #0056b3;
+        
     }
 
 /* Custom new product button */
@@ -62,17 +59,21 @@ a {
     flex-shrink: 0;
     border-radius: 8px;
     border: 1px solid #0057FC;
+    color: #0057FC;
     background: #FFF;
+    transition:background-color 0.3s ease, color 0.3s ease;
 }
+    .new-product-button:hover {
+        background-color: #0057FC; 
+        color: #FFF; 
+    }
 
-    .new-product-button.with-icon i {
-        margin-right: 5px;
+    .new-product-button.with-icon i, .new-product-button.with-icon svg {
+        color: inherit; 
     }
-    .new-product-button.with-icon svg {
-        margin-right: 5px;
-    }
-    .new-product-button.without-icon {
-        justify-content: center;
+
+    .new-product-button:hover i, .new-product-button:hover svg {
+        color: #FFF; 
     }
 
 /* Table styles */
@@ -84,15 +85,15 @@ a {
 
     .table.myTable th, .table.myTable td {
         border: 1px solid #ddd;
-        padding: 8px;
+        padding: 12px;
     }
 
     .table.myTable th {
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: left;
-        background-color: #f0f0f0; /* Light grey */
-        color: black;
+        background-color: #007bff; /* Light grey */
+        color: #fff;
     }
 
     .table.myTable tr {
@@ -105,19 +106,20 @@ a {
 
     .table.myTable .btn {
         color: #fff;
-        background-color: #4CAF50; /* Light grey */
+        background-color: #28a745; /* Light grey */
         border: none;
         border-radius: 5px;
-        padding: 5px 10px;
+        padding: 8px 16px;
         text-align: center;
         text-decoration: none;
         display: inline-block;
         font-size: 16px;
         margin: 4px 2px;
-        transition-duration: 0.4s;
+        
         cursor: pointer;
+        transition: background-color 0.3s ease;
     }
 
         .table.myTable .btn:hover {
-            background-color: #d0d0d0; /* Darker grey */
+            background-color: #218838; /* Darker grey */
         }

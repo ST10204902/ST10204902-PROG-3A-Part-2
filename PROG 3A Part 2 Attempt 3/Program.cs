@@ -22,6 +22,8 @@ var builder = Host.CreateDefaultBuilder(args)
                 .AddRoles<AppRole>()
                 .AddEntityFrameworkStores<AppDbContext>();
 
+            
+
             services.ConfigureApplicationCookie(options =>
             {
                 options.LoginPath = new PathString("/Identity/Account/Login");

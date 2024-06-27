@@ -2,34 +2,50 @@
 
 <h1>Add Farmers</h1>
 
-<table class="table myTable">
-    <thead>
-        <tr>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Middle Names</th>
-            <th>Email</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var application in Model)
-        {
+@if (Model.Any())
+{
+    <table class="table myTable">
+        <thead>
             <tr>
-                <td>@application.FirstName</td>
-                <td>@application.LastName</td>
-                <td>@application.MiddleNames</td>
-                <td>@application.Email</td>
-                <td>
-                    <form asp-action="AddFarmer" asp-controller="Users" asp-route-id="@application.Id" method="post">
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="add-farmer-button">Add Farmer</button>
-                    </form>
-                </td>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Middle Names</th>
+                <th>Email</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var application in Model)
+            {
+                <tr>
+                    <td>@application.FirstName</td>
+                    <td>@application.LastName</td>
+                    <td>@application.MiddleNames</td>
+                    <td>@application.Email</td>
+                    <td>
+                        <form asp-action="AddFarmer" asp-controller="Users" asp-route-id="@application.Id" method="post">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="add-farmer-button">Add Farmer</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            Swal.fire({
+                title: 'No Users',
+                text: 'There are no users to display.',
+                icon: 'info',
+                confirmButtonText: 'Ok'
+            });
+        });
+    </script>
+}
 
 
 <script>
